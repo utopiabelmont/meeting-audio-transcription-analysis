@@ -14,6 +14,7 @@ SKILL_ROOT = REPOSITORY_ROOT / "skills" / SKILL_NAME
 REQUIRED_PATHS = (
     REPOSITORY_ROOT / "README.md",
     REPOSITORY_ROOT / "VERSION",
+    REPOSITORY_ROOT / "LICENSE",
     REPOSITORY_ROOT / ".gitignore",
     REPOSITORY_ROOT / ".github" / "workflows" / "validate.yml",
     REPOSITORY_ROOT / "config" / "local_backend.example.json",
@@ -26,6 +27,7 @@ REQUIRED_PATHS = (
     REPOSITORY_ROOT / "scripts" / "build_package.ps1",
     REPOSITORY_ROOT / "scripts" / "validate_release.py",
     SKILL_ROOT / "SKILL.md",
+    SKILL_ROOT / "LICENSE",
     SKILL_ROOT / "agents" / "openai.yaml",
     SKILL_ROOT / "scripts" / "run_meeting_skill.py",
     SKILL_ROOT / "scripts" / "analyze_transcript.py",
@@ -191,6 +193,20 @@ def main() -> int:
     version = (REPOSITORY_ROOT / "VERSION").read_text(encoding="utf-8").strip()
     if re.fullmatch(r"\d+\.\d+\.\d+", version) is None:
         errors.append(f"VERSION 不是语义版本：{version!r}")
+
+    repository_license = REPOSITORY_ROOT / "LICENSE"
+    skill_license = SKILL_ROOT / "LICENSE"
+    if repository_license.is_file() and skill_license.is_file():
+        repository_license_text = repository_license.read_text(encoding="utf-8")
+        skill_license_text = skill_license.read_text(encoding="utf-8")
+        if repository_license_text != skill_license_text:
+            errors.append("仓库根目录与 Skill 子目录的 LICENSE 内容不一致。")
+        if (
+            "MIT License" not in repository_license_text
+            or "Copyright (c) 2026 utopiabelmont"
+            not in repository_license_text
+        ):
+            errors.append("LICENSE 不是预期的 MIT 许可或版权声明不正确。")
 
     if errors:
         print("发布验证失败：", file=sys.stderr)
