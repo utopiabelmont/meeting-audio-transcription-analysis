@@ -1,0 +1,479 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "meeting_analysis.schema.json",
+  "title": "Meeting Analysis",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "metadata",
+    "source_files",
+    "audio_duration",
+    "languages",
+    "speakers",
+    "executive_summary",
+    "key_points",
+    "topic_segments",
+    "timeline",
+    "decisions",
+    "action_items",
+    "open_questions",
+    "risks",
+    "disagreements",
+    "speaker_summaries",
+    "terminology",
+    "user_questions",
+    "quality_notes"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "output_language"
+      ],
+      "properties": {
+        "requested_output_language": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "output_language": {
+          "enum": [
+            "Chinese",
+            "English",
+            "Japanese"
+          ]
+        }
+      }
+    },
+    "source_files": {
+      "type": "object"
+    },
+    "audio_duration": {
+      "type": "number",
+      "minimum": 0
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "speakers": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "object",
+            "required": [
+              "speaker"
+            ],
+            "properties": {
+              "speaker": {
+                "type": "string",
+                "minLength": 1
+              },
+              "cue_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "speaking_duration": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        ]
+      }
+    },
+    "executive_summary": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "key_points": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "topic_segments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "action_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/actionItem"
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "disagreements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "speaker_summaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "speaker"
+        ],
+        "properties": {
+          "speaker": {
+            "type": "string",
+            "minLength": 1
+          },
+          "main_points": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/summaryPoint"
+            }
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/summaryPoint"
+            }
+          },
+          "commitments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/summaryPoint"
+            }
+          },
+          "concerns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/summaryPoint"
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/evidenceItem"
+            }
+          }
+        }
+      }
+    },
+    "terminology": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object"
+          }
+        ]
+      }
+    },
+    "user_questions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/questionAnswer"
+      }
+    },
+    "quality_notes": {
+      "oneOf": [
+        {
+          "type": "array"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "summaryPoint": {
+      "$ref": "#/$defs/evidenceItem"
+    },
+    "evidenceItem": {
+      "type": "object",
+      "required": [
+        "id",
+        "start_time",
+        "end_time",
+        "speakers",
+        "cue_indices",
+        "source_text",
+        "confidence"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "start_time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end_time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "evidence_start_time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "evidence_end_time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "segment_start_time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "segment_end_time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "speakers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "cue_indices": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "source_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence_status": {
+          "enum": [
+            "explicit",
+            "inferred",
+            "not_found"
+          ]
+        }
+      }
+    },
+    "actionItem": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/evidenceItem"
+        },
+        {
+          "type": "object",
+          "required": [
+            "task",
+            "owner",
+            "deadline",
+            "status"
+          ],
+          "properties": {
+            "task": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owner": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "deadline": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "questionAnswer": {
+      "type": "object",
+      "required": [
+        "id",
+        "question",
+        "answer",
+        "found"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "answer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "found": {
+          "type": "boolean"
+        },
+        "start_time": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "end_time": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "speakers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "cue_indices": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "uniqueItems": true
+        },
+        "source_text": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence_status": {
+          "enum": [
+            "explicit",
+            "inferred",
+            "not_found"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "found": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "start_time",
+              "end_time",
+              "speakers",
+              "cue_indices",
+              "source_text",
+              "confidence"
+            ],
+            "properties": {
+              "start_time": {
+                "type": "number"
+              },
+              "end_time": {
+                "type": "number"
+              },
+              "speakers": {
+                "minItems": 1
+              },
+              "cue_indices": {
+                "minItems": 1
+              },
+              "source_text": {
+                "minLength": 1
+              },
+              "confidence": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": true
+    }
+  }
+}
