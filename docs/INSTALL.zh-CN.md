@@ -138,6 +138,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\uninstall.ps1 -ConfirmRemoval
 
 卸载脚本只删除 Skill 安装目录，不删除后端、Conda 环境、模型缓存、原始录音或既有 Job。
 
-## 8. 许可证提示
+## 8. 许可证
 
-当前发布包没有 `LICENSE`。公开发布前请由仓库所有者选择许可证；私有仓库可先保持现状。
+本项目采用 MIT License。仓库根目录和可独立安装的 Skill 子目录均包含 `LICENSE`，因此从 GitHub 子目录安装或下载 Skill ZIP 时，版权和许可声明会随代码一起保留。
