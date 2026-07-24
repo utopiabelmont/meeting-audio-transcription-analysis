@@ -1,0 +1,4 @@
+interface:
+  display_name: "Meeting Audio Transcription & Analysis"
+  short_description: "Transcribe and analyze multilingual meeting recordings"
+  default_prompt: "Use $meeting-audio-transcription-analysis to transcribe this uploaded meeting recording, separate speakers, summarize decisions and actions, build a timeline, and cite timestamps."
