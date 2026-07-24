@@ -687,7 +687,7 @@ class WrapperFlowTests(unittest.TestCase):
         self.assertEqual(state["status"], "transcription_failed")
         self.assertEqual(
             state["degraded_fallback"]["present_final_outputs"],
-            [str(job_dir / "transcript_final.txt")],
+            [str((job_dir / "transcript_final.txt").resolve())],
         )
         self.assertNotIn(
             "DEGRADED POSTPROCESSING (NO MODELS)",
