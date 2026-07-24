@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "meeting_source_index.schema.json",
+  "title": "Meeting Source Index",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "transcript",
+    "entries"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "transcript": {
+      "type": "string",
+      "minLength": 1
+    },
+    "entries": {
+      "type": "object",
+      "propertyNames": {
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/sourceEntry"
+      }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "sourceEntry": {
+      "type": "object",
+      "required": [
+        "category",
+        "start_time",
+        "end_time",
+        "speakers",
+        "cue_indices",
+        "source_text"
+      ],
+      "properties": {
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end_time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "evidence_start_time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "evidence_end_time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "speakers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "cue_indices": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "source_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence_status": {
+          "enum": [
+            "explicit",
+            "inferred",
+            "not_found"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
