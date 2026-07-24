@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Local backend configuration and credentials
+**/local_backend.json
+.env
+.env.*
+*.token
+*.pem
+*.key
+
+# Build output
+dist/
+*.zip
+
+# Runtime logs, jobs, chunks, and generated transcripts
+*.log
+jobs/
+chunks/
+.meeting_skill_state/
+meeting_skill_run.json
+meeting_skill_input.json
+meeting_skill_validation.json
+pipeline_manifest.json
+pipeline_state.json
+pipeline_failed.json
+transcript_*.json
+transcript_*.txt
+transcript_*.vtt
+meeting_analysis.json
+meeting_analysis.md
+meeting_timeline.md
+meeting_source_index.json
+
+# Recordings and media
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.aac
+*.ogg
+*.mp4
+*.mov
+*.mkv
+
+# Models, environments, and caches
+conda/
+.venv/
+venv/
+models/
+cache/
+*.bin
+*.ckpt
+*.onnx
+*.pt
+*.pth
+*.safetensors
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
